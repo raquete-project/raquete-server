@@ -1,2 +1,3 @@
 # raquete-server
- API for raquete app
+
+Repositório do servidor da Raquete

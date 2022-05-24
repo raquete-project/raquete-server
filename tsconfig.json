@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "target": "es2017",
+        "module": "commonjs",
+        "lib": ["es6", "es2019"],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "removeComments": true,
+        "typeRoots": ["./node_modules/@types", "./src/domain/@types"],
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "emitDecoratorMetadata": true,
+        "strictPropertyInitialization": false,
+        "paths": {
+            "@application/*": ["./src/application/*"],
+            "@domain/*": ["./src/domain/*"],
+            "@infrastructure/*": ["./src/infrastructure/*"],
+            "@interfaces/*": ["./src/interfaces/*"],
+            "@controllers/*": ["./src/interfaces/controllers/*"],
+            "@postgres/*": ["./src/infrastructure/db/postgres/*"]
+        }
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+        "./plugins/**/*",
+        "./typings/**/*",
+        "./built/**/*",
+        "./dist/*",
+        "./node_modules/*"
+    ]
+}
