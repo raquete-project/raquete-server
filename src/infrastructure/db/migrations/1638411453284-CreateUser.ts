@@ -1,14 +1,15 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { SkillLevel } from '@domain/@types/SkillLevel';
 
-export class CreateTeam1638411453284 implements MigrationInterface {
+export class CreateUser1638411453284 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'pairs',
+                name: 'users',
                 columns: [
                     {
-                        name: 'pairId',
+                        name: 'userId',
                         type: 'uuid',
                         isPrimary: true,
                         generationStrategy: 'uuid',
@@ -17,15 +18,27 @@ export class CreateTeam1638411453284 implements MigrationInterface {
                     {
                         name: 'name',
                         type: 'varchar',
+                    },
+                    {
+                        name: 'email',
+                        type: 'varchar',
                         isUnique: true,
                     },
                     {
-                        name: 'userId1',
-                        type: 'uuid',
-                        default: null,
+                        name: 'password',
+                        type: 'varchar',
                     },
                     {
-                        name: 'userId2',
+                        name: 'skillLevel',
+                        type: 'enum',
+                        enum: [
+                            SkillLevel.BEGGINER,
+                            SkillLevel.REGULAR,
+                            SkillLevel.EXPERT,
+                        ],
+                    },
+                    {
+                        name: 'locationId',
                         type: 'uuid',
                         default: null,
                     },
@@ -33,16 +46,12 @@ export class CreateTeam1638411453284 implements MigrationInterface {
             })
         );
         await queryRunner.query(
-            `ALTER TABLE "pairs" ADD CONSTRAINT "FK_2e92564784fe26766b01040997f" FOREIGN KEY ("userId1") REFERENCES "users"("userId") ON DELETE CASCADE ON UPDATE CASCADE`
-        );
-
-        await queryRunner.query(
-            `ALTER TABLE "pairs" ADD CONSTRAINT "FK_1bd66b7e0599333e61d2e3e1678" FOREIGN KEY ("userId2") REFERENCES "users"("userId") ON DELETE CASCADE ON UPDATE CASCADE`
+            `ALTER TABLE "users" ADD CONSTRAINT "FK_UserLocation" FOREIGN KEY ("locationId") REFERENCES "locations"("locationId") ON DELETE CASCADE ON UPDATE CASCADE`
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('teams');
+        await queryRunner.dropTable('users');
         await queryRunner.query('DROP EXTENSION "uuid-ossp"');
     }
 }

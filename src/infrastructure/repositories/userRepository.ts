@@ -7,33 +7,32 @@ class UserRepository implements IUserRepository {
     async findAllUsers() {
         const repository = getRepository(User);
 
-        return await repository.find();
+        return await repository.query(`SELECT * FROM users`);
     }
 
     async createUser(user: User) {
         const repository = getRepository(User);
-        const existsUser = await repository.findOne({
-            where: { email: user.email },
-        });
+        const existsUser = await repository.query(
+            `SELECT "userId" FROM users WHERE email = '${user.email}'`
+        );
 
-        if (existsUser) {
+        if (existsUser.length >= 1) {
             return {
                 status: 'error',
                 message: 'Duplicate user',
                 payload: null,
             };
         }
-
-        const newUser = repository.create(user);
-
-        return await repository.save(newUser);
+        return await repository.query(
+            `INSERT INTO users (name, email, password, "skillLevel", "locationId") VALUES ('${user.name}', '${user.email}', '${user.password}', '${user.skillLevel}', '${user.locationId}') RETURNING *`
+        );
     }
 
     async checkUserLogin({ email, password }) {
         const repository = getRepository(User);
-        const user = await repository.findOne({
-            where: { email },
-        });
+        const user = await repository.query(
+            `SELECT password FROM users WHERE email = '${email}'`
+        );
 
         const { password: encryptedPassword } = user;
         delete user.password;

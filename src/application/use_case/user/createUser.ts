@@ -8,6 +8,7 @@ export default (
     email: string,
     password: string,
     skillLevel: SkillLevel,
+    locationId: string,
     userId?: string
 ) => {
     const user = new User(
@@ -15,6 +16,7 @@ export default (
         email,
         password,
         skillLevel,
+        locationId,
         userId
     );
     return userRepository.createUser(user);

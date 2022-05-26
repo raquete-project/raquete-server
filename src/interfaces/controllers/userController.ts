@@ -28,14 +28,15 @@ export default {
 
     create: async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { name, email, password, skillLevel } = req.body;
+            const { name, email, password, skillLevel, locationId } = req.body;
 
             const resultClients = await createUser(
                 userRepository,
                 name,
                 email,
                 password,
-                skillLevel
+                skillLevel,
+                locationId
             );
 
             if (resultClients.status === 'error') {
@@ -65,6 +66,7 @@ export default {
                     name,
                     email,
                     skillLevel,
+                    locationId,
                 },
                 process.env.SECRET
             );

@@ -1,15 +1,14 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { SkillLevel } from '@domain/@types/SkillLevel';
 
-export class CreateUser1636840639205 implements MigrationInterface {
+export class CreatePair1653533759379 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'users',
+                name: 'pairs',
                 columns: [
                     {
-                        name: 'userId',
+                        name: 'pairId',
                         type: 'uuid',
                         isPrimary: true,
                         generationStrategy: 'uuid',
@@ -18,32 +17,32 @@ export class CreateUser1636840639205 implements MigrationInterface {
                     {
                         name: 'name',
                         type: 'varchar',
-                    },
-                    {
-                        name: 'email',
-                        type: 'varchar',
                         isUnique: true,
                     },
                     {
-                        name: 'password',
-                        type: 'varchar',
+                        name: 'userId1',
+                        type: 'uuid',
+                        default: null,
                     },
                     {
-                        name: 'skillLevel',
-                        type: 'enum',
-                        enum: [
-                            SkillLevel.BEGGINER,
-                            SkillLevel.REGULAR,
-                            SkillLevel.EXPERT,
-                        ],
+                        name: 'userId2',
+                        type: 'uuid',
+                        default: null,
                     },
                 ],
             })
         );
+        await queryRunner.query(
+            `ALTER TABLE "pairs" ADD CONSTRAINT "FK_2e92564784fe26766b01040997f" FOREIGN KEY ("userId1") REFERENCES "users"("userId") ON DELETE CASCADE ON UPDATE CASCADE`
+        );
+
+        await queryRunner.query(
+            `ALTER TABLE "pairs" ADD CONSTRAINT "FK_1bd66b7e0599333e61d2e3e1678" FOREIGN KEY ("userId2") REFERENCES "users"("userId") ON DELETE CASCADE ON UPDATE CASCADE`
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('users');
+        await queryRunner.dropTable('teams');
         await queryRunner.query('DROP EXTENSION "uuid-ossp"');
     }
 }

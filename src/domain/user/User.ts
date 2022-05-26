@@ -4,12 +4,13 @@ import {
     Column,
     BeforeInsert,
     BeforeUpdate,
-    OneToMany,
+    ManyToOne,
 } from 'typeorm';
 
 import bcrypt from 'bcrypt';
 
 import { SkillLevel } from '../@types/SkillLevel';
+import Location from '@domain/location/Location';
 
 @Entity('users')
 export default class User {
@@ -18,12 +19,14 @@ export default class User {
         email: string,
         password: string,
         skillLevel: SkillLevel,
+        locationId: string,
         userId?: string
     ) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.skillLevel = skillLevel;
+        this.locationId = locationId;
         this.userId = userId;
     }
 
@@ -47,6 +50,9 @@ export default class User {
         default: SkillLevel.REGULAR,
     })
     skillLevel: SkillLevel = SkillLevel.REGULAR;
+
+    @ManyToOne(() => Location, (user) => User)
+    locationId: string;
 
     @BeforeInsert()
     @BeforeUpdate()
