@@ -4,9 +4,10 @@ import IPairRepository from '@domain/pair/IPairRepository';
 export default (
     pairRepository: IPairRepository,
     name: string,
-    userId1?: string,
+    score: number,
+    userId1: string,
     userId2?: string
 ) => {
-    const pair = new Pair(name, userId1, userId2);
+    const pair = new Pair(name, score, userId1, userId2);
     return pairRepository.createPair(pair);
 };

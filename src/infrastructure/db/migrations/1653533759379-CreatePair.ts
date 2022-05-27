@@ -20,13 +20,17 @@ export class CreatePair1653533759379 implements MigrationInterface {
                         isUnique: true,
                     },
                     {
+                        name: 'score',
+                        type: 'numeric',
+                    },
+                    {
                         name: 'userId1',
                         type: 'uuid',
-                        default: null,
                     },
                     {
                         name: 'userId2',
                         type: 'uuid',
+                        isNullable: true,
                         default: null,
                     },
                 ],

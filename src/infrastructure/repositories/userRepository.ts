@@ -24,21 +24,21 @@ class UserRepository implements IUserRepository {
             };
         }
         return await repository.query(
-            `INSERT INTO users (name, email, password, "skillLevel", "locationId") VALUES ('${user.name}', '${user.email}', '${user.password}', '${user.skillLevel}', '${user.locationId}') RETURNING *`
+            `INSERT INTO users (name, email, password, "skillLevel", score, "locationId") VALUES ('${user.name}', '${user.email}', '${user.password}', '${user.skillLevel}', '${user.score}', '${user.locationId}') RETURNING *`
         );
     }
 
     async checkUserLogin({ email, password }) {
         const repository = getRepository(User);
         const user = await repository.query(
-            `SELECT password FROM users WHERE email = '${email}'`
+            `SELECT "userId", password FROM users WHERE email = '${email}'`
         );
 
-        const { password: encryptedPassword } = user;
-        delete user.password;
+        const { password: encryptedPassword } = user[0];
+        delete user[0].password;
 
         if (compare(password, encryptedPassword)) {
-            return user;
+            return user[0].userId;
         } else {
             return null;
         }

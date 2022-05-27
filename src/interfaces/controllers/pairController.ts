@@ -26,15 +26,14 @@ export default {
 
     create: async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { name, userId1, userId2 } = req.body;
+            const { name, score, userId1 } = req.body;
 
             const resultPair = await createPair(
                 pairRepository,
                 name,
-                userId1,
-                userId2
+                score,
+                userId1
             );
-            console.log(resultPair);
 
             if (resultPair.status === 'error') {
                 res.status(409).json({
@@ -58,6 +57,7 @@ export default {
         }
     },
 
+    // user in req.body join in pair
     joinPair: async (req: Request, res: Response): Promise<Response> => {
         try {
             const { userId, pairId } = req.params;

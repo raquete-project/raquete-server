@@ -1,13 +1,4 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    BeforeInsert,
-    BeforeUpdate,
-    ManyToOne,
-} from 'typeorm';
-
-import bcrypt from 'bcrypt';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 import { SkillLevel } from '../@types/SkillLevel';
 import Location from '@domain/location/Location';
@@ -19,6 +10,7 @@ export default class User {
         email: string,
         password: string,
         skillLevel: SkillLevel,
+        score: number,
         locationId: string,
         userId?: string
     ) {
@@ -26,6 +18,7 @@ export default class User {
         this.email = email;
         this.password = password;
         this.skillLevel = skillLevel;
+        this.score = score;
         this.locationId = locationId;
         this.userId = userId;
     }
@@ -51,12 +44,9 @@ export default class User {
     })
     skillLevel: SkillLevel = SkillLevel.REGULAR;
 
+    @Column()
+    score: number;
+
     @ManyToOne(() => Location, (user) => User)
     locationId: string;
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    hashPassword() {
-        this.password = bcrypt.hashSync(this.password, 10);
-    }
 }

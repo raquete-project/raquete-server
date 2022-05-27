@@ -28,7 +28,8 @@ export default {
 
     create: async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { name, email, password, skillLevel, locationId } = req.body;
+            const { name, email, password, skillLevel, score, locationId } =
+                req.body;
 
             const resultClients = await createUser(
                 userRepository,
@@ -36,6 +37,7 @@ export default {
                 email,
                 password,
                 skillLevel,
+                score,
                 locationId
             );
 
@@ -47,12 +49,12 @@ export default {
                 });
             }
 
-            const { userId } = await checkUserLogin(userRepository, {
+            const userId = await checkUserLogin(userRepository, {
                 email,
                 password,
             });
 
-            if (!userId) {
+            if (userId === null) {
                 return res.status(401).json({
                     status: 'error',
                     message: 'Error while login new user',
@@ -66,6 +68,7 @@ export default {
                     name,
                     email,
                     skillLevel,
+                    score,
                     locationId,
                 },
                 process.env.SECRET

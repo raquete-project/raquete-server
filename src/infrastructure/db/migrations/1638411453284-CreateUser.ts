@@ -38,6 +38,10 @@ export class CreateUser1638411453284 implements MigrationInterface {
                         ],
                     },
                     {
+                        name: 'score',
+                        type: 'numeric',
+                    },
+                    {
                         name: 'locationId',
                         type: 'uuid',
                         default: null,
