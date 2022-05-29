@@ -5,6 +5,9 @@ const pairRouter = Router({ mergeParams: true });
 
 pairRouter.route('/').get(pairController.findAll).post(pairController.create);
 
-pairRouter.route('/:pairId').post(pairController.joinPair);
+pairRouter
+    .route('/:pairId')
+    .post(pairController.joinPair)
+    .delete(pairController.deletePair);
 
 export default pairRouter;

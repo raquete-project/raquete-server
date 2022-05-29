@@ -43,7 +43,4 @@ export default class Pair {
         nullable: true,
     })
     userId2: String | null;
-
-    @OneToMany(() => Match, () => Pair)
-    matches: Match[];
 }

@@ -12,9 +12,9 @@ class MatchRepository implements IMatchRepository {
     async createMatch(match: Match) {
         const repository = getRepository(Match);
 
-        const newMatch = repository.create(match);
-
-        return await repository.save(newMatch);
+        return await repository.query(
+            `INSERT INTO matches (date, result, "pairId1", "pairId2", "locationId") VALUES ('${match.date}', '${match.result}', '${match.pairId1}', '${match.pairId2}', '${match.locationId}') RETURNING *`
+        );
     }
 }
 

@@ -54,6 +54,14 @@ class PairRepository implements IPairRepository {
             `UPDATE pairs SET "userId2" = '${userId}' WHERE "pairId" = '${pairId}' RETURNING *`
         );
     }
+
+    async deletePair(pairId: string) {
+        const repository = getRepository(Pair);
+
+        return await repository.query(
+            `DELETE FROM pairs WHERE "pairId" = '${pairId}' RETURNING *`
+        );
+    }
 }
 
 export default new PairRepository();

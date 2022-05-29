@@ -42,10 +42,10 @@ export class CreateMatch1653533759380 implements MigrationInterface {
             `ALTER TABLE "matches" ADD CONSTRAINT "FK_MatchLocation" FOREIGN KEY ("locationId") REFERENCES "locations"("locationId") ON DELETE CASCADE ON UPDATE CASCADE`
         );
         await queryRunner.query(
-            `ALTER TABLE "matches" ADD CONSTRAINT "FK_Pair1_Match" FOREIGN KEY ("pairId") REFERENCES "pairs"("pairId") ON DELETE CASCADE ON UPDATE CASCADE`
+            `ALTER TABLE "matches" ADD CONSTRAINT "FK_Pair1_Match" FOREIGN KEY ("pairId1") REFERENCES "pairs"("pairId") ON DELETE CASCADE ON UPDATE CASCADE`
         );
         await queryRunner.query(
-            `ALTER TABLE "matches" ADD CONSTRAINT "FK_Pair1_Match" FOREIGN KEY ("pairId") REFERENCES "pairs"("pairId") ON DELETE CASCADE ON UPDATE CASCADE`
+            `ALTER TABLE "matches" ADD CONSTRAINT "FK_Pair2_Match" FOREIGN KEY ("pairId2") REFERENCES "pairs"("pairId") ON DELETE CASCADE ON UPDATE CASCADE`
         );
     }
 

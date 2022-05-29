@@ -57,7 +57,6 @@ export default {
         }
     },
 
-    // user in req.body join in pair
     joinPair: async (req: Request, res: Response): Promise<Response> => {
         try {
             const { userId, pairId } = req.params;
@@ -73,6 +72,26 @@ export default {
             return res.status(500).json({
                 status: 'error',
                 message: err.message || 'Error while user joined pair',
+                payload: [err],
+            });
+        }
+    },
+
+    deletePair: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { pairId } = req.params;
+
+            const result = await pairRepository.deletePair(pairId);
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Pair deleted',
+                payload: result,
+            });
+        } catch (err) {
+            return res.status(500).json({
+                status: 'error',
+                message: err.message || 'Error while deleting pair',
                 payload: [err],
             });
         }

@@ -7,15 +7,15 @@ export default class Match {
     constructor(
         date: Date,
         result: string,
-        pair1: string,
-        pair2: string,
+        pairId1: string,
+        pairId2: string,
         locationId: string,
         matchId?: string
     ) {
         this.date = date;
         this.result = result;
-        this.pair1 = pair1;
-        this.pair2 = pair2;
+        this.pairId1 = pairId1;
+        this.pairId2 = pairId2;
         this.locationId = locationId;
         this.matchId = matchId;
     }
@@ -33,13 +33,13 @@ export default class Match {
         cascade: true,
         eager: true,
     })
-    pair1: string;
+    pairId1: string;
 
     @ManyToOne(() => Pair, () => Match, {
         cascade: true,
         eager: true,
     })
-    pair2: string;
+    pairId2: string;
 
     @ManyToOne(() => Location, () => Match)
     locationId: string;
