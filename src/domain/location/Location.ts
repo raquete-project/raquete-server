@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import User from '@domain/user/User';
+import Match from '@domain/match/Match';
 
 @Entity('locations')
 export default class Location {
@@ -16,6 +17,9 @@ export default class Location {
     })
     address: string;
 
-    @OneToMany(() => Location, (user) => User)
+    @OneToMany(() => Location, () => User)
     users: User[];
+
+    @OneToMany(() => Location, () => Match)
+    matches: Match[];
 }

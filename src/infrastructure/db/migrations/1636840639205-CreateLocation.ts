@@ -2,7 +2,6 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateLocation1636840639205 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
-        3;
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({

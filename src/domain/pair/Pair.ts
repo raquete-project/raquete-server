@@ -1,5 +1,12 @@
-import { Column, ManyToOne, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    ManyToOne,
+    Entity,
+    PrimaryGeneratedColumn,
+    OneToMany,
+} from 'typeorm';
 import User from '@domain/user/User';
+import Match from '@domain/match/Match';
 
 @Entity('pairs')
 export default class Pair {
@@ -36,4 +43,7 @@ export default class Pair {
         nullable: true,
     })
     userId2: String | null;
+
+    @OneToMany(() => Match, () => Pair)
+    matches: Match[];
 }
